@@ -12,17 +12,6 @@ let
 in
 {
   config = lib.mkIf config.hardware.asahi.enable {
-    assertions = [
-      {
-        assertion = extractAtBoot -> config.boot.initrd.systemd.enable;
-        message = ''
-          Extracting the Asahi peripheral firmware at boot
-          (`hardware.asahi.peripheralFirmwareDirectory = null`) requires
-          systemd in the initrd (`boot.initrd.systemd.enable = true`).
-        '';
-      }
-    ];
-
     # for mounting the ESP
     boot.initrd.availableKernelModules = lib.mkIf extractAtBoot [
       "vfat"
